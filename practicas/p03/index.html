@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+</head>
+<body>
+     <!-- Comentario: index como punto de entrada del sitio -->
+  <h1>Práctica 3 – Marcado semántico</h1>
+
+  <nav>
+    <!-- Enlaces internos a secciones -->
+    <a href="#receta">Receta Guacamole</a> |
+    <a href="#articulo">Artículo MasterChef</a>
+  </nav>
+
+  <hr>
+
+  <!-- Sección 1: copia del 01_principal.html ya marcado -->
+  <section id="receta">
+    <h2>Receta: Guacamole (clásico)</h2>
+
+    <blockquote>
+      "Existe un condimento que no puede faltar en toda mesa mexicana. Algunos
+      lo consideran una salsa, otros un aderezo, algunos incluso le llaman
+      ensalada, otros simplemente le llaman por su nombre propio: Guacamole."
+    </blockquote>
+
+    <p>
+      Aunque el guacamole se prepara de diferentes formas según la zona de la que
+      provenga la receta, la base suele ser la misma. Aquí te mostramos una receta
+      muy completa para preparar esta conocida salsa mexicana:
+    </p>
+
+    <h3>Ingredientes</h3>
+    <ul>
+      <li>4 o 5 aguacates maduros</li>
+      <li>1 cebolla mediana (normal)</li>
+      <li>1 tomate mediano</li>
+      <li>1 chile serrano (o un jalapeño en conserva)</li>
+      <li>Zumo de 1/2 lima o limón</li>
+      <li>1 manojo de cilantro fresco</li>
+      <li>Sal</li>
+    </ul>
+
+    <h3>Instrucciones</h3>
+    <ol>
+      <li>Lavar bien el tomate y el manojo de cilantro</li>
+      <li>Pelar la cebolla y quitarle la capa exterior</li>
+      <li>Trozar la cebolla y el tomate en trozos muy pequeños</li>
+      <li>Picar las hojas de cilantro lo más fino posible, desechando los tallos</li>
+      <li>Poner todos los ingredientes en un recipiente, preferentemente un molcajete</li>
+      <li>Cortar por la mitad los aguacates, retirando el hueso</li>
+      <li>Sacar toda la pulpa posible de los aguacates y ponerla en el molcajete</li>
+      <li>Añadir el zumo de 1/2 lima con una pizca de sal</li>
+      <li>Añadir un chile serrano muy bien picadito</li>
+      <li>Machacar todos los ingredientes en el molcajete</li>
+    </ol>
+
+    <p>
+      En caso de no contar con un molcajete, se puede utilizar un tenedor
+      procurando que la pulpa del aguacate se mezcle con los demás ingredientes.
+      Debe quedarnos un guacamole con los trozos visibles, pero opcionalmente
+      puede pasarse por la batidora para dejarlo más cremoso y con una textura
+      más uniforme.
+    </p>
+  </section>
+
+  <hr>
+
+  <!-- Sección 2: copia del 02_articulo.html ya marcado -->
+  <section id="articulo">
+    <h2>Artículo: Bajito y Despacito</h2>
+    <article>
+      <header>
+        <p>Publicado por <cite>MasterChef</cite>,
+           <time datetime="2018-11-15">November 15, 2018</time></p>
+      </header>
+
+      <p>
+        Esta semana estamos <em>extremadamente</em> emocionados por presentar una
+        nueva técnica de cocina llamada <dfn><i>sous vide</i></dfn>. Con la técnica
+        <b><i>sous vide</i></b>, tú sumerges un recipiente (generalmente de plástico sellado
+        al vacío) en un baño de agua que precisamente se adapta a la
+        temperatura requerida para que la comida sea cocinada. En este programa,
+        <cite>Cocina para Geeks</cite>, Jaime Potter describe la técnica como
+        <q>poción mágica a temperatura ultra baja</q>.
+      </p>
+
+      <p>
+        La siguiente semana, prepararemos <b>Salmon Sous Vide con Eneldo Holandés</b>.
+        Para asistir al programa, contáctanos antes del 30 de Noviembre.
+      </p>
+
+      <p>registro@masterchef.com<br>552-336-1800</p>
+
+      <p><small>Advertencia:</small> El salmón cocinado a la <i>sous vide</i> no está
+        pasteurizado. Evítalo si estás embarazada o tienes problemas de alergia e inmunidad.
+      </p>
+    </article>
+  </section>
+</body>
+</html>
