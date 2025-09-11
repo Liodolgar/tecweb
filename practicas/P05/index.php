@@ -30,7 +30,7 @@
         echo '<li>$house*5 es inválida porque el símbolo * no está permitido.</li>';
         echo '</ul>';
     ?>
-
+<hr>
 
     <h2>Ejercicio 2</h2>
     <p>Proporcionar los valores de $a, $b, $c como sigue:</p>
@@ -62,6 +62,8 @@ entonces las tres variables apuntan al mismo valor.
 Por eso al mostrar el contenido, \$a, \$b y \$c imprimen lo mismo.</p>";
 ?>
 
+<hr>
+
 <h2>Ejercicio 3</h2>
     <p>Muestra el contenido de cada variable inmediatamente después de cada asignación,
 verificar la evolución<br> del tipo de estas variables (imprime todos los componentes de los
@@ -83,10 +85,11 @@ arreglo):</p>
     echo @"<h3>z con [0] en la cadena: $z</h3>";
     ?>
 
+<hr>
 
 <h2>Ejercicio 4</h2>
     <p>Lee y muestra los valores de las variables del ejercicio anterior, pero ahora con la ayuda de
-la matriz $GLOBALS<br> o del modificador global de PHP.:</p>
+la matriz $GLOBALS o del modificador global de PHP.:</p>
 <?php
 echo "a = " . $GLOBALS['a'] . "<br>";
 echo "b = " . $GLOBALS['b'] . "<br>";
