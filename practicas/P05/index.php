@@ -62,5 +62,39 @@ entonces las tres variables apuntan al mismo valor.
 Por eso al mostrar el contenido, \$a, \$b y \$c imprimen lo mismo.</p>";
 ?>
 
+<h2>Ejercicio 3</h2>
+    <p>Muestra el contenido de cada variable inmediatamente después de cada asignación,
+verificar la evolución<br> del tipo de estas variables (imprime todos los componentes de los
+arreglo):</p>
+    <?php
+    $a = "PHP5";
+    echo @"<h3>a incial:  $a</h3>";
+    $z[] = &$a;
+    echo @"<h3>z inicial: $z</h3>";
+    $b = "5a version de PHP";
+    echo @"<h3>b inical: $b</h3>";
+    $c = @($b*10);
+    echo @"<h3>c inicial: $c</h3>";
+    $a .= $b;
+    echo @"<h3>a haciendo referencia a b: $a</h3>";
+    $b *= $c;
+    echo @"<h3>b haciendo referencia a c: $b</h3>";
+    $z[0] = "MySQL";
+    echo @"<h3>z con [0] en la cadena: $z</h3>";
+    ?>
+
+
+<h2>Ejercicio 4</h2>
+    <p>Lee y muestra los valores de las variables del ejercicio anterior, pero ahora con la ayuda de
+la matriz $GLOBALS<br> o del modificador global de PHP.:</p>
+<?php
+echo "a = " . $GLOBALS['a'] . "<br>";
+echo "b = " . $GLOBALS['b'] . "<br>";
+echo "c = " . $GLOBALS['c'] . "<br>";
+echo "z = ";
+print_r($GLOBALS['z']);
+echo "<br>";
+?>
+
 </body>
 </html>
