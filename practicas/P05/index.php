@@ -33,12 +33,15 @@
 <hr>
 
     <h2>Ejercicio 2</h2>
-    <p>Proporcionar los valores de $a, $b, $c como sigue:</p>
+    <p>Proporcionar los valores de $a, $b, $c como sigue: <br>
+$a = “ManejadorSQL”;<br>
+$b = 'MySQL’;<br>
+$c = &$a;</p>
     <?php
         $a = "ManejadorSQL";
         $b = "MySQL";
         $c = &$a;
-        
+
         echo "<h3>Primer bloque de asignaciones</h3>";
 echo "\$a = $a <br>";
 echo "\$b = $b <br>";
@@ -69,6 +72,7 @@ Por eso al mostrar el contenido, \$a, \$b y \$c imprimen lo mismo.</p>";
 verificar la evolución<br> del tipo de estas variables (imprime todos los componentes de los
 arreglo):</p>
     <?php
+    echo '<h4>Respuesta:</h4>';
     $a = "PHP5";
     echo @"<h3>a incial:  $a</h3>";
     $z[] = &$a;
@@ -89,14 +93,50 @@ arreglo):</p>
 
 <h2>Ejercicio 4</h2>
     <p>Lee y muestra los valores de las variables del ejercicio anterior, pero ahora con la ayuda de
-la matriz $GLOBALS o del modificador global de PHP.:</p>
+la matriz $GLOBALS <br> o del modificador global de PHP.:</p>
 <?php
+echo '<h4>Respuesta:</h4>';
 echo "a = " . $GLOBALS['a'] . "<br>";
 echo "b = " . $GLOBALS['b'] . "<br>";
 echo "c = " . $GLOBALS['c'] . "<br>";
 echo "z = ";
 print_r($GLOBALS['z']);
 echo "<br>";
+?>
+<hr>
+
+<h2>Ejercicio 5</h2>
+<p>
+    Se analiza el valor final de las variables $a, $b y $c después de una serie de asignaciones y conversiones <br> de tipo (casting).
+$a = “7 personas”;<br>
+$b = (integer) $a;<br>
+$a = “9E3”;<br>
+$c = (double) $a;
+</p>
+
+<?php
+
+    $a = "7 personas";
+    $b = (integer) $a;
+    $a = "9E3";
+    $c = (double) $a;
+
+    // --- Mostrando los resultados ---
+    echo "<p><strong>Resultado:</strong></p>";
+    
+    echo "Variable \$a: ";
+    echo ($a);
+    echo "<br>";
+
+    echo "Variable \$b: ";
+    echo($b);
+    echo "<br>";
+
+    echo "Variable \$c: ";
+    echo($c);
+    echo "<br>";
+
+    unset($a, $b, $c);
 ?>
 
 </body>
