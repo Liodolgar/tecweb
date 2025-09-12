@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Práctica 3</title>
+    <title>Práctica 5</title>
 </head>
 <body>
     <h2>Ejercicio 1</h2>
@@ -107,37 +107,98 @@ echo "<br>";
 
 <h2>Ejercicio 5</h2>
 <p>
-    Se analiza el valor final de las variables $a, $b y $c después de una serie de asignaciones y conversiones <br> de tipo (casting).
-$a = “7 personas”;<br>
+    Se analiza el valor final de las variables $a, $b y $c después de una serie de asignaciones y conversiones <br> de tipo (casting).<br>
+</p>
+    $a = “7 personas”;<br>
 $b = (integer) $a;<br>
 $a = “9E3”;<br>
 $c = (double) $a;
-</p>
+
 
 <?php
+unset($a);
+unset($a);
+unset($a);
 
     $a = "7 personas";
     $b = (integer) $a;
     $a = "9E3";
     $c = (double) $a;
 
-    // --- Mostrando los resultados ---
-    echo "<p><strong>Resultado:</strong></p>";
-    
+echo '<h4>Respuesta: </h4>';
+
+
+echo "<li>$a = ".$a."</li>";
+
+echo "<li>$b = ".$b."</li>";
+
+echo "<li>$c = ".$c."</li>";
+
+echo "</ul>";
+?>
+
+<hr>
+
+<h2>Ejercicio 6</h2>
+<p>
+    Dar y comprobar el valor booleano de las variables $a, $b, $c, $d, $e y $f y muéstralas
+usando la función var_dump(<datos>).</p>
+$a = “0”; <br>
+$b = “TRUE”;<br>
+$c = FALSE;<br>
+$d = ($a OR $b);<br>
+$e = ($a AND $c);<br>
+$f = ($a XOR $b);
+
+
+<?php
+
+    $a = "0";
+    $b = "TRUE";
+    $c = FALSE;
+    $d = ($a OR $b);
+    $e = ($a AND $c);
+    $f = ($a XOR $b);
+echo '<h4>Respuesta:</h4>';
+
     echo "Variable \$a: ";
-    echo ($a);
+    var_dump($a);
     echo "<br>";
 
     echo "Variable \$b: ";
-    echo($b);
+    var_dump($b);
     echo "<br>";
 
     echo "Variable \$c: ";
-    echo($c);
+    var_dump($c);
     echo "<br>";
 
-    unset($a, $b, $c);
-?>
+    echo "Variable \$d (\$a OR \$b): ";
+    var_dump($d);
+    echo "<br>";
+    
+    echo "Variable \$e (\$a AND \$c): ";
+    var_dump($e);
+    echo "<br>";
 
+    echo "Variable \$f (\$a XOR \$b): ";
+    var_dump($f);
+    echo "<br>";
+?>
+<p>
+    Después investiga una función de PHP que permita transformar el valor booleano de $c y $e
+en uno que se pueda mostrar <br>con un echo:</p>
+<?php
+    
+    echo "La función var_export() con el segundo parámetro en true convierte el booleano a un string true o false. <br>";
+
+    $c_string = var_export($c, true);
+    $e_string = var_export($e, true);
+
+    echo "El valor de \$c (que es FALSE) se puede mostrar como: <strong>$c_string</strong><br>";
+    echo "El valor de \$e (que es FALSE) se puede mostrar como: <strong>$e_string</strong><br>";
+
+    unset($a, $b, $c, $d, $e, $f, $c_string, $e_string);
+?>
 </body>
 </html>
