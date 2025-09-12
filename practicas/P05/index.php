@@ -9,7 +9,7 @@
     <p>Determina cuál de las siguientes variables son válidas y explica por qué:</p>
     <p>$_myvar,  $_7var,  myvar,  $myvar,  $var7,  $_element1, $house*5</p>
     <?php
-        //AQUI VA MI CÓDIGO PHP
+        // Aqui va mi codigo PHP
         $_myvar;
         $_7var;
         //myvar;       // Inválida
@@ -200,5 +200,32 @@ en uno que se pueda mostrar <br>con un echo:</p>
 
     unset($a, $b, $c, $d, $e, $f, $c_string, $e_string);
 ?>
+
+<hr>
+
+<h2>Ejercicio 7</h2>
+<p>Usando la variable predefinida <code>$_SERVER</code>, determina lo siguiente:</p>
+
+<ul>
+    <?php
+        
+        $software_servidor = $_SERVER['SERVER_SOFTWARE'];
+        $version_php = phpversion();
+
+        
+        $sistema_operativo = php_uname();
+
+        $idioma_cliente = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+    ?>
+
+    <li><strong>a. Versión de Apache y PHP:</strong> <?php echo $software_servidor . " / PHP " . $version_php; ?></li>
+    <li><strong>b. Nombre del Sistema Operativo (Servidor):</strong> <?php echo $sistema_operativo; ?></li>
+    <li><strong>c. Idioma del Navegador (Cliente):</strong> <?php echo $idioma_cliente; ?></li>
+</ul>
+
+<?php
+    unset($software_servidor, $version_php, $sistema_operativo, $idioma_cliente);
+?>
+
 </body>
 </html>
