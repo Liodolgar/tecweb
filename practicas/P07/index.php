@@ -71,7 +71,7 @@ include __DIR__ . '/src/funciones.php';
         <option value="while">while</option>
         <option value="dowhile">do...while</option>
     </select>
-    <input type="submit" value="Buscar múltiplo">
+    <input type="submit" value="Buscar">
 </form>
 
 <?php
@@ -93,7 +93,29 @@ if (isset($_GET['divisor']) && isset($_GET['modo'])) {
     }
 }
 ?>
+    <hr>
+    <h2>Ejercicio 4</h2>
+<p>Generar un arreglo asociativo con índices del 97 al 122 y valores de 'a' a 'z'.</p>
 
+<form method="post" action="">
+    <input type="hidden" name="ejercicio" value="4">
+    <input type="submit" value="Mostrar arreglo">
+</form>
+
+<?php
+if (isset($_POST['ejercicio']) && $_POST['ejercicio'] == "4") {
+    $asciiArr = generarArreglo();
+
+    echo "<table border='1' cellpadding='5'>";
+    echo "<tr><th>Índice (ASCII)</th><th>Letra</th></tr>";
+    foreach ($asciiArr as $codigo => $letra) {
+        echo "<tr><td>$codigo</td><td>$letra</td></tr>";
+    }
+    echo "</table>";
+}
+?>
+
+    <hr>
 
     <h2>Ejemplo de POST</h2>
     <form action="http://localhost/tecweb/practicas/p04/index.php" method="post">

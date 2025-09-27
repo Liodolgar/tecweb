@@ -69,4 +69,12 @@ function encontrarMultiploDoWhile($divisor) {
     return $n;
 }
 
+// Ejercicio 4
+function generarArreglo() {
+    $arr = [];
+    for ($i = 97; $i <= 122; $i++) {
+        $arr[$i] = chr($i); // chr convierte código ASCII en carácter
+    }
+    return $arr;
+}
 
