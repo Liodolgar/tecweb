@@ -30,6 +30,37 @@ include __DIR__ . '/src/funciones.php';
     }
     ?>
 
+    <hr>
+    <h2>Ejercicio 2</h2>
+<p>Generar números aleatorios hasta obtener la secuencia: <strong>impar - par - impar</strong></p>
+
+<form method="post" action="">
+    <input type="hidden" name="ejercicio" value="2">
+    <input type="submit" value="Generar secuencia">
+</form>
+
+<?php
+if (isset($_POST['ejercicio']) && $_POST['ejercicio'] == "2") {
+    $resultado = generarSecuencia();
+
+    echo "<p><strong>Iteraciones:</strong> {$resultado['iteraciones']}</p>";
+    echo "<p><strong>Total de números generados:</strong> {$resultado['numerosGenerados']}</p>";
+
+    echo "<table border='1' cellpadding='5'>";
+    echo "<tr><th>#</th><th>N1</th><th>N2</th><th>N3</th></tr>";
+    foreach ($resultado['filas'] as $i => $fila) {
+        echo "<tr>";
+        echo "<td>" . ($i+1) . "</td>";
+        echo "<td>{$fila[0]}</td>";
+        echo "<td>{$fila[1]}</td>";
+        echo "<td>{$fila[2]}</td>";
+        echo "</tr>";
+    }
+    echo "</table>";
+}
+?>
+
+
     <h2>Ejemplo de POST</h2>
     <form action="http://localhost/tecweb/practicas/p04/index.php" method="post">
         Name: <input type="text" name="name"><br>
