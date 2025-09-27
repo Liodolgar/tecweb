@@ -78,3 +78,15 @@ function generarArreglo() {
     return $arr;
 }
 
+//Ejercicio 5
+
+function verificarEdadSexo($edad, $sexo) {
+    if ($sexo === "femenino" && $edad >= 18 && $edad <= 35) {
+        return "Bienvenida, usted está en el rango de edad permitido.";
+    } else {
+        return "Lo sentimos, no cumple con los requisitos.";
+    }
+}
+?>
+
+

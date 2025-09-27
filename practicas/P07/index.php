@@ -116,21 +116,28 @@ if (isset($_POST['ejercicio']) && $_POST['ejercicio'] == "4") {
 ?>
 
     <hr>
+<h2>Ejercicio 5</h2>
+<p>Ingrese su edad y sexo para validar el rango permitido:</p>
 
-    <h2>Ejemplo de POST</h2>
-    <form action="http://localhost/tecweb/practicas/p04/index.php" method="post">
-        Name: <input type="text" name="name"><br>
-        E-mail: <input type="text" name="email"><br>
-        <input type="submit">
-    </form>
-    <br>
-    <?php
-        if(isset($_POST["name"]) && isset($_POST["email"]))
-        {
-            echo $_POST["name"];
-            echo '<br>';
-            echo $_POST["email"];
-        }
-    ?>
+<form method="post" action="">
+    Edad: <input type="number" name="edad" required><br><br>
+    Sexo: 
+    <select name="sexo" required>
+        <option value="">Seleccione...</option>
+        <option value="femenino">Femenino</option>
+        <option value="masculino">Masculino</option>
+    </select><br><br>
+    <input type="hidden" name="ejercicio" value="5">
+    <input type="submit" value="Validar">
+</form>
+
+<?php
+if (isset($_POST['ejercicio']) && $_POST['ejercicio'] == "5") {
+    $edad = isset($_POST['edad']) ? intval($_POST['edad']) : 0;
+    $sexo = isset($_POST['sexo']) ? $_POST['sexo'] : '';
+    $mensaje = verificarEdadSexo($edad, $sexo);
+    echo "<h3>$mensaje</h3>";
+}
+?>
 </body>
 </html>
