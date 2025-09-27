@@ -32,15 +32,15 @@ include __DIR__ . '/src/funciones.php';
 
     <hr>
     <h2>Ejercicio 2</h2>
-<p>Generar números aleatorios hasta obtener la secuencia: <strong>impar - par - impar</strong></p>
+ <p>Generar números aleatorios hasta obtener la secuencia: <strong>impar - par - impar</strong></p>
 
-<form method="post" action="">
+ <form method="post" action="">
     <input type="hidden" name="ejercicio" value="2">
     <input type="submit" value="Generar secuencia">
-</form>
+ </form>
 
-<?php
-if (isset($_POST['ejercicio']) && $_POST['ejercicio'] == "2") {
+ <?php
+ if (isset($_POST['ejercicio']) && $_POST['ejercicio'] == "2") {
     $resultado = generarSecuencia();
 
     echo "<p><strong>Iteraciones:</strong> {$resultado['iteraciones']}</p>";
@@ -57,6 +57,40 @@ if (isset($_POST['ejercicio']) && $_POST['ejercicio'] == "2") {
         echo "</tr>";
     }
     echo "</table>";
+}
+
+
+?>
+<hr>
+<h2>Ejercicio 3</h2>
+<p>Encontrar el primer número aleatorio que sea múltiplo de un divisor dado (GET).</p>
+
+<form method="get" action="">
+    Divisor: <input type="number" name="divisor" required>
+    <select name="modo">
+        <option value="while">while</option>
+        <option value="dowhile">do...while</option>
+    </select>
+    <input type="submit" value="Buscar múltiplo">
+</form>
+
+<?php
+if (isset($_GET['divisor']) && isset($_GET['modo'])) {
+    $div = $_GET['divisor'];
+    $modo = $_GET['modo'];
+
+    if ($modo === 'while') {
+        $resultado = encontrarMultiploWhile($div);
+    } else {
+        $resultado = encontrarMultiploDoWhile($div);
+    }
+
+    if ($resultado === null) {
+        echo "<p>El divisor no es válido.</p>";
+    } else {
+        echo "<p><strong>Divisor:</strong> " . htmlspecialchars($div) . "</p>";
+        echo "<p><strong>Número encontrado:</strong> " . htmlspecialchars($resultado) . "</p>";
+    }
 }
 ?>
 

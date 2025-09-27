@@ -38,3 +38,35 @@ function generarSecuencia($maxIter = 100000) {
         'numerosGenerados' => $iteraciones * 3
     ];
 }
+
+// Ejercicio 3 - con while
+function encontrarMultiploWhile($divisor) {
+    $divisor = intval($divisor);
+    if ($divisor <= 0) {
+        return null; // divisor inválido
+    }
+
+    $encontrado = null;
+    while ($encontrado === null) {
+        $n = rand(1, 1000000);
+        if ($n % $divisor == 0) {
+            $encontrado = $n;
+        }
+    }
+    return $encontrado;
+}
+
+function encontrarMultiploDoWhile($divisor) {
+    $divisor = intval($divisor);
+    if ($divisor <= 0) {
+        return null;
+    }
+
+    do {
+        $n = rand(1, 1000000);
+    } while ($n % $divisor != 0);
+
+    return $n;
+}
+
+
