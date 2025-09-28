@@ -139,5 +139,43 @@ if (isset($_POST['ejercicio']) && $_POST['ejercicio'] == "5") {
     echo "<h3>$mensaje</h3>";
 }
 ?>
+
+<hr>
+<h2>Ejercicio 6</h2>
+
+<form method="post" action="">
+    Buscar por matrícula: <input type="text" name="matricula" maxlength="7" placeholder="LLLNNNN">
+    <input type="submit" value="Buscar">
+    <input type="hidden" name="ejercicio" value="6">
+</form>
+<br>
+<form method="post" action="">
+    <input type="hidden" name="ejercicio" value="6_mostrar_todos">
+    <input type="submit" value="Mostrar todos los autos">
+</form>
+
+<?php
+if (isset($_POST['ejercicio']) && $_POST['ejercicio'] == "6") {
+    $matricula = strtoupper(trim($_POST['matricula']));
+    $resultado = buscarPorMatricula($matricula);
+    if ($resultado) {
+        echo "<h3>Resultado para matrícula $matricula:</h3>";
+        echo "<pre>";
+        print_r($resultado);
+        echo "</pre>";
+    } else {
+        echo "<p>No se encontró un auto con la matrícula $matricula.</p>";
+    }
+}
+
+if (isset($_POST['ejercicio']) && $_POST['ejercicio'] == "6_mostrar_todos") {
+    $parque = obtenerVehiculos();
+    echo "<h3>Todos los autos registrados:</h3>";
+    echo "<pre>";
+    print_r($parque);
+    echo "</pre>";
+}
+?>
+
 </body>
 </html>
