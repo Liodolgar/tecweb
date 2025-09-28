@@ -119,7 +119,7 @@ if (isset($_POST['ejercicio']) && $_POST['ejercicio'] == "4") {
 <h2>Ejercicio 5</h2>
 <p>Ingrese su edad y sexo para validar el rango permitido:</p>
 
-<form method="post" action="">
+<form action="respuestaEj5.php" method="post">
     Edad: <input type="number" name="edad" required><br><br>
     Sexo: 
     <select name="sexo" required>
@@ -143,13 +143,13 @@ if (isset($_POST['ejercicio']) && $_POST['ejercicio'] == "5") {
 <hr>
 <h2>Ejercicio 6</h2>
 
-<form method="post" action="">
+<form action="respuestaEj6.php" method="post">
     Buscar por matrícula: <input type="text" name="matricula" maxlength="7" placeholder="LLLNNNN">
     <input type="submit" value="Buscar">
     <input type="hidden" name="ejercicio" value="6">
 </form>
 <br>
-<form method="post" action="">
+<form action="respuestaEj6.php" method="post">
     <input type="hidden" name="ejercicio" value="6_mostrar_todos">
     <input type="submit" value="Mostrar todos los autos">
 </form>
