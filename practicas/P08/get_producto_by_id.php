@@ -1,78 +1,71 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
-	<?php
-	if(isset($_GET['id']))
-		$id = $_GET['id'];
+<!DOCTYPE html>
+<html lang="es">
+<?php
+$row = null;
 
-	if (!empty($id))
-	{
-		/** SE CREA EL OBJETO DE CONEXION */
-		@$link = new mysqli('localhost', 'root', '12345678a', 'marketzone');	
+if (isset($_GET['id'])) {
+    $id = (int) $_GET['id']; // fuerza a entero
 
-		/** comprobar la conexión */
-		if ($link->connect_errno) 
-		{
-			die('Falló la conexión: '.$link->connect_error.'<br/>');
-			    /** NOTA: con @ se suprime el Warning para gestionar el error por medio de código */
-		}
+    // Crear objeto de conexión
+    @$link = new mysqli('localhost', 'root', '', 'marketzone');
+    $link->set_charset("utf8");
 
-		/** Crear una tabla que no devuelve un conjunto de resultados */
-		if ( $result = $link->query("SELECT * FROM productos WHERE id = '{$id}'") ) 
-		{
-			$row = $result->fetch_array(MYSQLI_ASSOC);
-			/** útil para liberar memoria asociada a un resultado con demasiada información */
-			$result->free();
-		}
+    if ($link->connect_errno) {
+        die('Falló la conexión: ' . $link->connect_error . '<br/>');
+    }
 
-		$link->close();
-	}
-	?>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>Producto</title>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	</head>
-	<body>
-		<h3>PRODUCTO</h3>
+    // Consulta segura con prepared statement
+    $stmt = $link->prepare("SELECT * FROM productos WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-		<br/>
-		
-		<?php if( isset($row) ) : ?>
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+    }
 
-			<table class="table">
-				<thead class="thead-dark">
-					<tr>
-					<th scope="col">#</th>
-					<th scope="col">Nombre</th>
-					<th scope="col">Marca</th>
-					<th scope="col">Modelo</th>
-					<th scope="col">Precio</th>
-					<th scope="col">Unidades</th>
-					<th scope="col">Detalles</th>
-					<th scope="col">Imagen</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<th scope="row"><?= $row['id'] ?></th>
-						<td><?= $row['nombre'] ?></td>
-						<td><?= $row['marca'] ?></td>
-						<td><?= $row['modelo'] ?></td>
-						<td><?= $row['precio'] ?></td>
-						<td><?= $row['unidades'] ?></td>
-						<td><?= utf8_encode($row['detalles']) ?></td>
-						<td><img src=<?= $row['imagen'] ?> ></td>
-					</tr>
-				</tbody>
-			</table>
+    $stmt->close();
+    $link->close();
+}
+?>
+<head>
+    <meta charset="UTF-8">
+    <title>Producto</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body class="p-3">
+    <h3>PRODUCTO</h3>
+    <br/>
 
-		<?php elseif(!empty($id)) : ?>
-
-			 <script>
-                alert('El ID del producto no existe');
-             </script>
-
-		<?php endif; ?>
-	</body>
+    <?php if ($row): ?>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Precio</th>
+                    <th>Unidades</th>
+                    <th>Detalles</th>
+                    <th>Imagen</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row"><?= $row['id'] ?></th>
+                    <td><?= htmlspecialchars($row['nombre']) ?></td>
+                    <td><?= htmlspecialchars($row['marca']) ?></td>
+                    <td><?= htmlspecialchars($row['modelo']) ?></td>
+                    <td>$<?= number_format($row['precio'], 2) ?></td>
+                    <td><?= (int) $row['unidades'] ?></td>
+                    <td><?= htmlspecialchars($row['detalles']) ?></td>
+                    <td><img src="<?= htmlspecialchars($row['imagen']) ?>" width="150" alt="Imagen del producto"></td>
+                </tr>
+            </tbody>
+        </table>
+    <?php elseif (!empty($id)): ?>
+        <script>alert('El ID del producto no existe');</script>
+    <?php endif; ?>
+</body>
 </html>
