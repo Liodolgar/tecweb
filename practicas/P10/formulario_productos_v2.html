@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar / Editar Producto - Hot Keys (ejemplo)</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+        label { display:block; margin-top:8px; }
+        input, textarea, select { width: 320px; padding:6px; }
+        .error { color: #b00020; font-size:0.9em; }
+        .field { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h2>Registro / Edición de Producto</h2>
+
+    <!-- OBS: action puede cambiar según tu backend. -->
+    <form id="productoForm" action="set_producto_v2.php" method="POST" novalidate>
+        <div class="field">
+            <label for="nombre">Nombre (requerido, ≤100):</label>
+            <input type="text" id="nombre" name="nombre" maxlength="100" required>
+            <div class="error" id="err-nombre"></div>
+        </div>
+
+        <div class="field">
+            <label for="marca">Marca (requerida):</label>
+            <select id="marca" name="marca" required>
+                <option value="">-- Selecciona una marca --</option>
+                <option value="Sony">Sony</option>
+                <option value="Samsung">Samsung</option>
+                <option value="Xiaomi">Xiaomi</option>
+                <option value="Other">Otra</option>
+            </select>
+            <div class="error" id="err-marca"></div>
+        </div>
+
+        <div class="field">
+            <label for="modelo">Modelo (requerido, alfanumérico, ≤25):</label>
+            <input type="text" id="modelo" name="modelo" maxlength="25" required>
+            <div class="error" id="err-modelo"></div>
+        </div>
+
+        <div class="field">
+            <label for="precio">Precio (requerido, > 99.99):</label>
+            <input type="number" id="precio" name="precio" step="0.01" required>
+            <div class="error" id="err-precio"></div>
+        </div>
+
+        <div class="field">
+            <label for="detalles">Detalles (opcional, ≤250):</label>
+            <textarea id="detalles" name="detalles" rows="4" cols="40" maxlength="250"></textarea>
+            <div class="error" id="err-detalles"></div>
+        </div>
+
+        <div class="field">
+            <label for="unidades">Unidades (requerido, ≥0):</label>
+            <input type="number" id="unidades" name="unidades" min="0" required>
+            <div class="error" id="err-unidades"></div>
+        </div>
+
+        <div class="field">
+            <label for="imagen">Ruta de imagen (opcional):</label>
+            <input type="text" id="imagen" name="imagen" placeholder="img/imagen.png">
+            <div class="error" id="err-imagen"></div>
+        </div>
+
+        <!-- Hidden input para el id del producto (cuando se edita) -->
+        <input type="hidden" id="producto_id" name="producto_id" value="">
+
+        <br>
+        <input type="submit" value="Guardar producto">
+    </form>
+
+    <script>
+        (function() {
+            const form = document.getElementById('productoForm');
+            const DEFAULT_IMG = 'img/default-product.png'; // Ruta por defecto si no se proporciona imagen
+
+            function showError(id, msg) {
+                document.getElementById(id).textContent = msg || '';
+            }
+
+            function isAlphanumeric(str) {
+                // Permite letras, números, espacios, guiones y guion bajo
+                return /^[A-Za-z0-9 _-]+$/.test(str);
+            }
+
+            form.addEventListener('submit', function(ev) {
+                // limpiar errores
+                ['err-nombre','err-marca','err-modelo','err-precio','err-detalles','err-unidades','err-imagen']
+                    .forEach(id => showError(id, ''));
+
+                let valid = true;
+
+                const nombre = document.getElementById('nombre').value.trim();
+                const marca = document.getElementById('marca').value.trim();
+                const modelo = document.getElementById('modelo').value.trim();
+                const precio = parseFloat(document.getElementById('precio').value);
+                const detalles = document.getElementById('detalles').value.trim();
+                const unidades = document.getElementById('unidades').value;
+                const imagen = document.getElementById('imagen').value.trim();
+
+                // a) Nombre: requerido, ≤100
+                if (!nombre) {
+                    showError('err-nombre', 'El nombre es requerido.');
+                    valid = false;
+                } else if (nombre.length > 100) {
+                    showError('err-nombre', 'El nombre debe tener 100 caracteres o menos.');
+                    valid = false;
+                }
+
+                // b) Marca: requerida (lista)
+                if (!marca) {
+                    showError('err-marca', 'Selecciona una marca.');
+                    valid = false;
+                }
+
+                // c) Modelo: requerido, alfanumérico, ≤25
+                if (!modelo) {
+                    showError('err-modelo', 'El modelo es requerido.');
+                    valid = false;
+                } else if (modelo.length > 25) {
+                    showError('err-modelo', 'El modelo debe tener 25 caracteres o menos.');
+                    valid = false;
+                } else if (!isAlphanumeric(modelo)) {
+                    showError('err-modelo', 'El modelo solo puede contener letras, números, espacios, guiones o guion bajo.');
+                    valid = false;
+                }
+
+                // d) Precio: requerido y > 99.99
+                if (isNaN(precio)) {
+                    showError('err-precio', 'El precio es requerido y debe ser un número.');
+                    valid = false;
+                } else if (!(precio > 99.99)) {
+                    showError('err-precio', 'El precio debe ser mayor a 99.99.');
+                    valid = false;
+                }
+
+                // e) Detalles: opcional, si se usa ≤250
+                if (detalles && detalles.length > 250) {
+                    showError('err-detalles', 'Los detalles deben tener 250 caracteres o menos.');
+                    valid = false;
+                }
+
+                // f) Unidades: requerido y ≥ 0
+                const unidadesNum = Number(unidades);
+                if (unidades === '') {
+                    showError('err-unidades', 'Las unidades son requeridas.');
+                    valid = false;
+                } else if (!Number.isFinite(unidadesNum) || unidadesNum < 0) {
+                    showError('err-unidades', 'Las unidades deben ser un número mayor o igual a 0.');
+                    valid = false;
+                }
+
+                // g) Imagen: opcional, si vacío usar ruta por defecto
+                if (!imagen) {
+                    // inyectar valor por defecto (esto se enviará al servidor)
+                    document.getElementById('imagen').value = DEFAULT_IMG;
+                } else {
+                    // opcional: validar formato simple de ruta/archivo
+                    if (imagen.length > 200) {
+                        showError('err-imagen', 'La ruta de la imagen es demasiado larga.');
+                        valid = false;
+                    }
+                }
+
+                if (!valid) {
+                    ev.preventDefault();
+                    // opción: poner foco en el primer error
+                    const firstError = document.querySelector('.error:not(:empty)');
+                    if (firstError) {
+                        const id = firstError.id.replace('err-','');
+                        const field = document.getElementById(id);
+                        if (field) field.focus();
+                    }
+                } else {
+                    // si todo OK, deja que el formulario se envíe
+                    // (si quieres, aquí puedes deshabilitar el submit para evitar envíos dobles)
+                }
+            });
+
+            // --- Helper: si vienes desde get_productos_xhtml_v2.php puedes rellenar campos usando query params ---
+            // Ejemplo: formulario_productos_v2.html?producto_id=3&nombre=...&marca=...
+            function fillFromQuery() {
+                const params = new URLSearchParams(window.location.search);
+                if (params.has('producto_id')) {
+                    document.getElementById('producto_id').value = params.get('producto_id') || '';
+                }
+                ['nombre','marca','modelo','precio','detalles','unidades','imagen'].forEach(k => {
+                    if (params.has(k)) {
+                        const el = document.getElementById(k);
+                        if (el) el.value = params.get(k);
+                    }
+                });
+            }
+            fillFromQuery();
+
+        })();
+    </script>
+</body>
+</html>
