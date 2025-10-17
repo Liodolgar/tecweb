@@ -8,6 +8,26 @@ var baseJSON = {
     "imagen": "img/default.png"
   };
 
+
+// FUNCION COMPATIBLE CON NAVEGADORES PARA AJAX
+function getXMLHttpRequest() {
+    var objetoAjax;
+    try {
+        objetoAjax = new XMLHttpRequest();
+    } catch (err1) {
+        try {
+            objetoAjax = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (err2) {
+            try {
+                objetoAjax = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (err3) {
+                objetoAjax = false;
+            }
+        }
+    }
+    return objetoAjax;
+}
+
 // FUNCIÓN CALLBACK DE BOTÓN "Buscar"
 function buscarID(e) {
     e.preventDefault();
@@ -93,40 +113,35 @@ function buscarProducto(e) {
 function agregarProducto(e) {
     e.preventDefault();
 
-    var productoJsonString = document.getElementById('description').value;
+    var nombre = document.getElementById('name').value.trim();
+    var productoJsonString = document.getElementById('description').value.trim();
+
+    if (!nombre || !productoJsonString) {
+        alert('Debes llenar nombre y JSON del producto');
+        return;
+    }
+
     var finalJSON = JSON.parse(productoJsonString);
-    finalJSON['nombre'] = document.getElementById('name').value;
-    productoJsonString = JSON.stringify(finalJSON,null,2);
+    finalJSON['nombre'] = nombre; // aseguramos que el nombre venga del input
+
+    // Validaciones simples de campos obligatorios
+    if (!finalJSON.marca || !finalJSON.modelo || !finalJSON.precio || !finalJSON.detalles || !finalJSON.unidades) {
+        alert('El JSON debe contener marca, modelo, precio, detalles y unidades');
+        return;
+    }
 
     var client = getXMLHttpRequest();
     client.open('POST', './backend/create.php', true);
     client.setRequestHeader('Content-Type', "application/json;charset=UTF-8");
     client.onreadystatechange = function () {
         if (client.readyState == 4 && client.status == 200) {
-            console.log(client.responseText);
+            var resp = JSON.parse(client.responseText);
+            alert(resp.message); // mostramos el mensaje del servidor
         }
     };
-    client.send(productoJsonString);
+    client.send(JSON.stringify(finalJSON));
 }
 
-// SE CREA EL OBJETO DE CONEXIÓN COMPATIBLE CON EL NAVEGADOR
-function getXMLHttpRequest() {
-    var objetoAjax;
-    try{
-        objetoAjax = new XMLHttpRequest();
-    }catch(err1){
-        try{
-            objetoAjax = new ActiveXObject("Msxml2.XMLHTTP");
-        }catch(err2){
-            try{
-                objetoAjax = new ActiveXObject("Microsoft.XMLHTTP");
-            }catch(err3){
-                objetoAjax = false;
-            }
-        }
-    }
-    return objetoAjax;
-}
 
 function init() {
     var JsonString = JSON.stringify(baseJSON,null,2);
