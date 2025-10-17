@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Prueba AJAX JSON</title>
+</head>
+<body>
+
+<h2>Prueba de búsqueda de productos</h2>
+
+<input type="text" id="search" placeholder="Escribe algo">
+<button id="btnBuscar">Buscar</button>
+
+<table border="1">
+<thead>
+<tr>
+<th>Id</th>
+<th>Nombre</th>
+<th>Detalles</th>
+</tr>
+</thead>
+<tbody id="productos"></tbody>
+</table>
+
+<script>
+document.getElementById('btnBuscar').addEventListener('click', function() {
+    var criterio = document.getElementById('search').value.trim();
+    console.log("Criterio a buscar:", criterio);
+
+    var client = new XMLHttpRequest();
+    client.open('GET', './backend/read.php?criterio=' + encodeURIComponent(criterio), true);
+    client.onreadystatechange = function() {
+        console.log("readyState:", client.readyState, "status:", client.status);
+
+        if (client.readyState === 4 && client.status === 200) {
+            console.log("Respuesta del servidor:", client.responseText);
+
+            var productos = JSON.parse(client.responseText);
+            console.log("JSON parseado:", productos);
+
+            var tbody = document.getElementById("productos");
+            tbody.innerHTML = '';
+
+            if (productos.length > 0) {
+                productos.forEach(prod => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${prod.id}</td>
+                            <td>${prod.nombre}</td>
+                            <td>${prod.detalles}</td>
+                        </tr>
+                    `;
+                });
+            } else {
+                tbody.innerHTML = '<tr><td colspan="3">No se encontraron productos.</td></tr>';
+            }
+        }
+    };
+    client.send();
+});
+</script>
+
+</body>
+</html>
