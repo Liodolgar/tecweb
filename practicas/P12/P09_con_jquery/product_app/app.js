@@ -11,6 +11,21 @@ var baseJSON = {
 // INICIALIZACIÓN CON JQUERY
 $(document).ready(function() {
     init();
+    
+    // Delegar click de editar producto en la tabla
+$('#products').on('click', '.product-edit', function() {
+    let row = $(this).closest('tr');
+    let id = row.attr('productId');
+    let nombre = row.find('td:eq(1)').text();
+    let descripcionHTML = row.find('td:eq(2) ul').html();
+
+    // Cargar JSON base y reemplazar campos según la fila
+    let currentJSON = JSON.parse($('#description').val());
+    currentJSON.nombre = nombre; // opcional: extraer datos reales del HTML si quieres
+    $('#productId').val(id);
+    $('#name').val(nombre);
+    $('#description').val(JSON.stringify(currentJSON, null, 2));
+});
 
     // Manejar submit del formulario de agregar producto
     $('#product-form').submit(function(e){
@@ -60,8 +75,10 @@ function listarProductos() {
                     <td>${producto.nombre}</td>
                     <td><ul>${descripcion}</ul></td>
                     <td>
-                        <button class="product-delete btn btn-danger">Eliminar</button>
+                    <button class="product-edit btn btn-warning">Editar</button>
+                    <button class="product-delete btn btn-danger">Eliminar</button>
                     </td>
+
                 </tr>
             `;
         });
@@ -91,8 +108,10 @@ function buscarProducto() {
                     <td>${producto.nombre}</td>
                     <td><ul>${descripcion}</ul></td>
                     <td>
-                        <button class="product-delete btn btn-danger">Eliminar</button>
+                    <button class="product-edit btn btn-warning">Editar</button>
+                    <button class="product-delete btn btn-danger">Eliminar</button>
                     </td>
+
                 </tr>
             `;
             template_bar += `<li>${producto.nombre}</li>`;
@@ -135,24 +154,48 @@ function agregarProducto() {
     // Agregar el nombre al JSON
     finalJSON['nombre'] = nombre;
 
-    // Enviar al backend
-    $.ajax({
-        url: './backend/product-add.php',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(finalJSON),
-        success: function(response){
-            let respuesta = JSON.parse(response);
-            let template_bar = `
-                <li style="list-style: none;">status: ${respuesta.status}</li>
-                <li style="list-style: none;">message: ${respuesta.message}</li>
-            `;
-            $('#product-result').removeClass('d-none').addClass('d-block');
-            $('#container').html(template_bar);
-            listarProductos();
-        }
-    });
+    // Verificar si es edición o nuevo registro
+    let productId = $('#productId').val();
+
+    if(productId === "") {
+        // AGREGAR PRODUCTO
+        $.ajax({
+            url: './backend/product-add.php',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(finalJSON),
+            success: function(response){ mostrarRespuesta(response); }
+        });
+    } else {
+        // EDITAR PRODUCTO
+        finalJSON['id'] = productId;
+        $.ajax({
+            url: './backend/product-edit.php',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(finalJSON),
+            success: function(response){
+                mostrarRespuesta(response);
+                $('#productId').val(""); // Limpiar ID para volver a agregar
+            }
+        });
+    }
 }
+
+function mostrarRespuesta(response){
+    let respuesta = JSON.parse(response);
+    let color = respuesta.status === "success" ? "green" : "red";
+
+    let template_bar = `
+        <li style="list-style: none; color: ${color}; font-weight: bold;">status: ${respuesta.status}</li>
+        <li style="list-style: none; color: ${color};">${respuesta.message}</li>
+    `;
+    $('#product-result').removeClass('d-none').addClass('d-block');
+    $('#container').html(template_bar);
+    listarProductos();
+}
+
+
 
 
 function eliminarProducto(id) {
