@@ -19,8 +19,8 @@ if ($nombre == '' || $marca == '' || $modelo == '') {
     die('<h3>Error:</h3> Debes llenar los campos Nombre, Marca y Modelo.');
 }
 
-// Validar que no exista ya un producto igual
-$sql_check = "SELECT * FROM productos WHERE nombre = '$nombre' AND marca = '$marca' AND modelo = '$modelo'";
+// Validar que no exista ya un producto igual (solo los no eliminados)
+$sql_check = "SELECT * FROM productos WHERE nombre = '$nombre' AND marca = '$marca' AND modelo = '$modelo' AND eliminado = 0";
 $result = $link->query($sql_check);
 
 if ($result && $result->num_rows > 0) {
@@ -29,8 +29,14 @@ if ($result && $result->num_rows > 0) {
     exit;
 }
 
-// Insertar el nuevo producto
-$sql_insert = "INSERT INTO productos (nombre, marca, modelo, precio, detalles, unidades, imagen)
+// Query anterior comentada
+/*
+$sql_insert = "INSERT INTO productos (nombre, marca, modelo, precio, detalles, unidades, imagen, eliminado)
+               VALUES ('$nombre', '$marca', '$modelo', $precio, '$detalles', $unidades, '$imagen', 0)";
+*/
+
+// Nueva query usando column names (sin id ni eliminado)
+$sql_insert = "INSERT INTO productos (nombre, marca, modelo, precio, detalles, unidades, imagen) 
                VALUES ('$nombre', '$marca', '$modelo', $precio, '$detalles', $unidades, '$imagen')";
 
 if ($link->query($sql_insert)) {
@@ -52,6 +58,7 @@ if ($link->query($sql_insert)) {
         <p><strong>Detalles:</strong> {$detalles}</p>
         <p><strong>Unidades:</strong> {$unidades}</p>
         <p><strong>Imagen:</strong> {$imagen}</p>
+        <p><strong>Estado:</strong> No eliminado (eliminado = 0)</p>
         <br>
         <a href="formulario_productos.html">Volver al formulario</a>
     </body>

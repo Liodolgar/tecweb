@@ -30,13 +30,13 @@
         echo '<li>$house*5 es inválida porque el símbolo * no está permitido.</li>';
         echo '</ul>';
     ?>
-<hr>
+<hr />
 
     <h2>Ejercicio 2</h2>
-    <p>Proporcionar los valores de $a, $b, $c como sigue: <br>
-$a = “ManejadorSQL”;<br>
-$b = 'MySQL’;<br>
-$c = &$a;</p>
+    <p>Proporcionar los valores de $a, $b, $c como sigue: <br />
+$a = “ManejadorSQL”;<br />
+$b = 'MySQL’;<br />
+$c = &amp;$a;</p>
     <?php
         $a = "ManejadorSQL";
         $b = "MySQL";
@@ -65,11 +65,11 @@ entonces las tres variables apuntan al mismo valor.
 Por eso al mostrar el contenido, \$a, \$b y \$c imprimen lo mismo.</p>";
 ?>
 
-<hr>
+<hr />
 
 <h2>Ejercicio 3</h2>
     <p>Muestra el contenido de cada variable inmediatamente después de cada asignación,
-verificar la evolución<br> del tipo de estas variables (imprime todos los componentes de los
+verificar la evolución<br /> del tipo de estas variables (imprime todos los componentes de los
 arreglo):</p>
     <?php
     echo '<h4>Respuesta:</h4>';
@@ -89,11 +89,11 @@ arreglo):</p>
     echo @"<h3>z con [0] en la cadena: $z</h3>";
     ?>
 
-<hr>
+<hr />
 
 <h2>Ejercicio 4</h2>
     <p>Lee y muestra los valores de las variables del ejercicio anterior, pero ahora con la ayuda de
-la matriz $GLOBALS <br> o del modificador global de PHP.:</p>
+la matriz $GLOBALS <br /> o del modificador global de PHP.:</p>
 <?php
 echo '<h4>Respuesta:</h4>';
 echo "a = " . $GLOBALS['a'] . "<br>";
@@ -103,16 +103,19 @@ echo "z = ";
 print_r($GLOBALS['z']);
 echo "<br>";
 ?>
-<hr>
+<hr />
 
 <h2>Ejercicio 5</h2>
 <p>
-    Se analiza el valor final de las variables $a, $b y $c después de una serie de asignaciones y conversiones <br> de tipo (casting).<br>
+    Se analiza el valor final de las variables $a, $b y $c después de una serie de asignaciones y conversiones <br /> de tipo (casting).<br />
 </p>
-    $a = “7 personas”;<br>
-$b = (integer) $a;<br>
-$a = “9E3”;<br>
+
+<pre>
+$a = "7 personas";
+$b = (integer) $a;
+$a = "9E3";
 $c = (double) $a;
+</pre>
 
 
 <?php
@@ -137,19 +140,20 @@ echo "<li>$c = ".$c."</li>";
 echo "</ul>";
 ?>
 
-<hr>
+<hr />
 
 <h2>Ejercicio 6</h2>
 <p>
-    Dar y comprobar el valor booleano de las variables $a, $b, $c, $d, $e y $f y muéstralas
-usando la función var_dump(<datos>).</p>
-$a = “0”; <br>
-$b = “TRUE”;<br>
-$c = FALSE;<br>
-$d = ($a OR $b);<br>
-$e = ($a AND $c);<br>
-$f = ($a XOR $b);
+Dar y comprobar el valor booleano de las variables $a, $b, $c, $d, $e y $f y muéstralas usando la función var_dump(&lt;datos&gt;).</p>
 
+<pre>
+$a = "0"; 
+$b = "TRUE";
+$c = FALSE;
+$d = ($a OR $b);
+$e = ($a AND $c);
+$f = ($a XOR $b);
+</pre>
 
 <?php
 
@@ -187,7 +191,7 @@ echo '<h4>Respuesta:</h4>';
 ?>
 <p>
     Después investiga una función de PHP que permita transformar el valor booleano de $c y $e
-en uno que se pueda mostrar <br>con un echo:</p>
+en uno que se pueda mostrar <br />con un echo:</p>
 <?php
     
     echo "La función var_export() con el segundo parámetro en true convierte el booleano a un string true o false. <br>";
@@ -201,7 +205,7 @@ en uno que se pueda mostrar <br>con un echo:</p>
     unset($a, $b, $c, $d, $e, $f, $c_string, $e_string);
 ?>
 
-<hr>
+<hr />
 
 <h2>Ejercicio 7</h2>
 <p>Usando la variable predefinida <code>$_SERVER</code>, determina lo siguiente:</p>
@@ -226,6 +230,9 @@ en uno que se pueda mostrar <br>con un echo:</p>
 <?php
     unset($software_servidor, $version_php, $sistema_operativo, $idioma_cliente);
 ?>
-
+<p>
+    <a href="https://validator.w3.org/check?uri=referer"><img
+    src="https://www.w3.org/Icons/valid-xhtml11" alt="Valid XHTML 1.1" height="31" width="88" /></a>
+</p>
 </body>
 </html>

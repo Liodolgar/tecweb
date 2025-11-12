@@ -1,110 +1,94 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>ProductApp</title>
-  <link rel="stylesheet" href="https://bootswatch.com/4/superhero/bootstrap.min.css">
-</head>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>ProductApp</title>
+        <link rel="stylesheet" href="https://bootswatch.com/4/superhero/bootstrap.min.css">
+  </head>
+  <body>
 
-<body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href=".">ProductApp</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-  <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">ProductApp</a>
-    <div class="collapse navbar-collapse">
-      <form class="form-inline ml-auto">
-        <input class="form-control mr-2" id="search" type="search" placeholder="Buscar producto">
-        <button class="btn btn-success" type="submit">Buscar</button>
-      </form>
-    </div>
-  </nav>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto"></ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" name="search" id="search" type="search" placeholder="ID, marca o descripción" aria-label="Search">
+            <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
+          </form>
+      </div>
+    </nav>
 
-  <div class="container">
-    <div class="row p-4">
-
-      <!-- FORMULARIO -->
-      <div class="col-md-5">
-        <div class="card">
-          <div class="card-body">
-
-            <form id="product-form">
-
-              <!-- NOMBRE -->
+    <div class="container">
+      <div class="row p-4">
+        <div class="col-md-5">
+          <div class="card">
+            <div class="card-body">
+                            <form id="product-form" novalidate>
+                <input type="hidden" id="productId">
+              
+                              <div class="form-group">
+                <label for="name">Nombre:</label>
+                  <input class="form-control" type="text" id="name" placeholder="Nombre de producto" required>
+                <small id="name-status" class="form-text" style="display: none;"></small>
+                </div>
+              
               <div class="form-group">
-                <input class="form-control" type="text" id="name" placeholder="Nombre de producto">
-                <small id="name-status" class="text-warning" style="display:none;"></small>
+                <label for="description">Descripción:</label>
+                <textarea class="form-control" id="description" rows="3" placeholder="Descripción del producto" required></textarea>
+                <small id="description-status" class="form-text" style="display: none;"></small>
               </div>
 
-              <!-- MARCA -->
               <div class="form-group">
-                <input class="form-control" type="text" id="brand" placeholder="Marca">
-                <small id="brand-status" class="text-warning" style="display:none;"></small>
+                <label for="brand">Marca:</label>
+                <input class="form-control" type="text" id="brand" placeholder="Marca del producto" required>
+                <small id="brand-status" class="form-text" style="display: none;"></small>
               </div>
 
-              <!-- PRECIO -->
               <div class="form-group">
-                <input class="form-control" type="number" id="price" placeholder="Precio">
-                <small id="price-status" class="text-warning" style="display:none;"></small>
+                <label for="price">Precio:</label>
+                <input class="form-control" type="number" id="price" placeholder="Precio" step="0.01" min="0" required>
+                <small id="price-status" class="form-text" style="display: none;"></small>
               </div>
+                
+              <div id="form-status" class="alert" style="display: none;"></div>
 
-              <!-- MODELO -->
-<div class="form-group">
-  <input class="form-control" type="text" id="model" placeholder="Modelo">
-  <small id="model-status" class="text-warning" style="display:none;"></small>
-</div>
+                <button class="btn btn-primary btn-block text-center" type="submit">
+                  Agregar Producto
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
 
-<!-- UNIDADES -->
-<div class="form-group">
-  <input class="form-control" type="number" id="units" placeholder="Unidades disponibles">
-  <small id="units-status" class="text-warning" style="display:none;"></small>
-</div>
+                <div class="col-md-7">
+          <div class="card my-4 d-none" id="product-result">
+            <div class="card-body">
+                            <ul id="container"></ul>
+            </div>
+          </div>
 
-<!-- DETALLES -->
-<div class="form-group">
-  <input class="form-control" type="text" id="details" placeholder="Detalles (opcional)">
-  <small id="details-status" class="text-warning" style="display:none;"></small>
-</div>
+          <table class="table table-bordered table-sm">
+            <thead>
+              <tr>
+                <td>Id</td>
+                <td>Nombre</td>
+                <td>Descripción</td>
+              </tr>
+            </thead>
+            <tbody id="products"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-<!-- IMAGEN -->
-<div class="form-group">
-  <input class="form-control" type="text" id="image" placeholder="URL de imagen (opcional)">
-  <small id="image-status" class="text-warning" style="display:none;"></small>
-</div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+        <script src="app.js"></script>
+  </body>
 
-
-              <input type="hidden" id="productId">
-
-              <button class="btn btn-primary btn-block" type="submit">
-                Agregar Producto
-              </button>
-            </form>
-
-          </div>
-        </div>
-      </div>
-
-      <!-- TABLA DE PRODUCTOS -->
-      <div class="col-md-7">
-
-        <table class="table table-bordered table-sm">
-          <thead>
-            <tr>
-              <td>ID</td>
-              <td>Nombre</td>
-              <td>Marca</td>
-              <td>Precio</td>
-              <td>Descripción</td>
-            </tr>
-          </thead>
-          <tbody id="products"></tbody>
-        </table>
-
-      </div>
-
-    </div>
-  </div>
-
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="app.js"></script>
-</body>
 </html>
