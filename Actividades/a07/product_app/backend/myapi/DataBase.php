@@ -1,27 +1,19 @@
 <?php
-class Database {
-    private $host = "localhost";
-    private $user = "root";
-    private $password = "";
-    private $db = "marketzone";
-    public $conexion;
+    namespace MARKETZONE\DB;
 
-    public function __construct() {
-        $this->conectar();
-    }
+    abstract class DataBase {
+        /** @var \mysqli $conexion Conexión activa con la base de datos */
+        protected $conexion;
 
-    private function conectar() {
-        $this->conexion = new mysqli($this->host, $this->user, $this->password, $this->db);
-
-        if ($this->conexion->connect_error) {
-            die("Error de conexión: " . $this->conexion->connect_error);
+        /**
+         * Inicializa la conexión con la base de datos.
+         *
+         * @param string $dbname Nombre de la base de datos
+         * @param string $usuario Usuario de acceso
+         * @param string $clave Contraseña del usuario
+         */
+        public function __construct($dbname, $usuario, $clave) {
+            $this->conexion = @new \mysqli('localhost', $usuario, $clave, $dbname);
         }
-
-        $this->conexion->set_charset("utf8");
     }
-
-    public function cerrar() {
-        $this->conexion->close();
-    }
-}
 ?>
