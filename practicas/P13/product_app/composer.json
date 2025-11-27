@@ -1,0 +1,19 @@
+{
+    "name": "tecweb/product_app",
+    "description": "Aplicación de productos con PSR-4",
+    "type": "project",
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "TECWEB\\MYAPI\\": "backend/myapi/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tu Nombre",
+            "email": "tuemail@example.com"
+        }
+    ]
+}

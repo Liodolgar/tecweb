@@ -1,8 +1,7 @@
 <?php
-    use TECWEB\MYAPI\Products as Products;
-    require_once __DIR__.'/myapi/Products.php';
+    use TECWEB\MYAPI\Read\Read;
+    require_once __DIR__ . '/../vendor/autoload.php';
 
-    $productos = new Products('marketzone');
-    $productos->list();
-    echo $productos->getData();
+    $producto = new Read('marketzone');
+    echo $producto->list();
 ?>
