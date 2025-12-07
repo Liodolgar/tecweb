@@ -1,0 +1,455 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*ESTILOS DEL DASHBOARD*/
+
+.dashboard-body {
+    display: block !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    background: #000000;
+}
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ------------------------------
+   SIDEBAR (DARK PREMIUM)
+--------------------------------*/
+.sidebar {
+    width: 280px;
+    background: linear-gradient(180deg, #141414, #0d0d0d);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 35px 24px;
+    border-right: 1px solid #1f1f1f;
+    box-shadow: 4px 0 25px rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 1000; 
+    overflow-y: auto;
+}
+
+/* Título */
+.sidebar h1 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 35px;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 5px rgba(255,255,255,0.15);
+}
+
+/* ------------------------------
+   USER BOX
+--------------------------------*/
+.user-info {
+    background: rgba(255,255,255,0.05);
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 35px;
+    border: 1px solid #2b2b2b;
+    box-shadow: 0 0 12px rgba(255,255,255,0.03);
+    backdrop-filter: blur(6px);
+}
+
+.user-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #ffffff;
+}
+
+.user-email {
+    font-size: 14px;
+    color: #c1c1c1;
+}
+
+/* ------------------------------
+   NAVIGATION BUTTONS
+--------------------------------*/
+.sidebar-nav {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.nav-btn {
+    width: 100%;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.04);
+    color: #e8e8e8;
+    border: 1px solid #2c2c2c;
+    border-radius: 10px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.nav-btn .icon img {
+    width: 22px;
+    height: 22px;
+    filter: invert(1);
+}
+
+.nav-btn:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: #444;
+    transform: translateX(6px);
+    box-shadow: 0 3px 15px rgba(255,255,255,0.1);
+}
+
+/* ------------------------------
+   NAV BUTTON ACTIVE
+--------------------------------*/
+.nav-btn.active {
+    background: rgba(255,255,255,0.18);
+    color: #000000;
+    border-color: #888;
+    box-shadow: 0 0 18px rgba(255,255,255,0.25);
+    transform: scale(1.03);
+}
+
+.nav-btn.active .icon img {
+    filter: invert(0);
+}
+
+/* Desactivar movimiento cuando es active */
+.nav-btn.active:hover {
+    transform: scale(1.03);
+}
+
+/* ------------------------------
+   LOGOUT BUTTON
+--------------------------------*/
+.logout-btn {
+    width: 100%;
+    padding: 12px;
+    background: #0c0c0c;
+    color: #9a9a9a;
+    border: 1px solid #222;
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    margin-top: 20px;
+}
+
+.logout-btn:hover {
+    background: #d1d1d1;
+    color: #000;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 20px rgba(255,255,255,0.25);
+}
+
+/* Contenido principal */
+.main-content {
+    flex-grow: 1;
+    padding: 10px;
+    background: #000000;
+    margin-left: 280px;
+    z-index: 0;
+}
+
+.content-section {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.content-section.active {
+    display: block;
+}
+
+.content-section h2 {
+    color: #ffffff;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.content-section p {
+    color: #666;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        box-shadow: none;
+        padding: 18px 16px;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 16px;
+    }
+
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .form-container {
+        width: 100%;
+        max-width: 100%;
+        margin: 12px 0;
+        padding: 18px;
+        border-radius: 12px;
+    }
+
+    .nav-btn, .logout-btn, .nuevo-recurso-btn {
+        width: 100%;
+    }
+
+    .nuevo-recurso-btn {
+        display: block;
+        margin: 12px 0;
+    }
+}
+
+/* ------------------------------
+   FORMULARIO (DARK UI MODERNO)
+--------------------------------*/
+.form-container {
+    width: 420px;
+    max-width: calc(100% - 40px);
+    background: #0d0d0d;
+    padding: 28px;
+    margin: 25px auto;
+    border-radius: 16px;
+    color: #ffffff;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.05);
+    border: 1px solid #1f1f1f;
+    backdrop-filter: blur(6px); 
+    position: relative;
+    z-index: 10;
+}
+
+.form-container h2 {
+    color: #ffffff;
+    font-size: 22px;
+    margin-bottom: 18px;
+    text-shadow: 0 0 6px rgba(255,255,255,0.2);
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.form-container input,
+.form-container textarea {
+    background: #0f0f0f;
+    color: #f1f1f1;
+    border: 1px solid #2c2c2c;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.form-container input:focus,
+.form-container textarea:focus {
+    border-color: #8f8f8f;
+    background: #151515;
+    outline: none;
+    box-shadow: 0 0 8px rgba(200,200,200,0.2);
+}
+
+
+/* ------------------------------
+   BOTÓN DE ENVIAR
+--------------------------------*/
+.form-container button[type="submit"] {
+    background: linear-gradient(135deg, #222, #000);
+    color: #d6d6d6;
+    border: 1px solid #444;
+    border-radius: 10px;
+    padding: 13px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-container button[type="submit"]:hover {
+    background: #e6e6e6;
+    color: #000;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(255, 255, 255, 0.25);
+}
+
+
+/* ------------------------------
+   BOTÓN "NUEVO RECURSO"
+--------------------------------*/
+.nuevo-recurso-btn {
+    background: #111;
+    color: #eaeaea;
+    border: 1px solid #333;
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 500;
+    width: fit-content;
+    transition: all 0.25s ease;
+    margin-bottom: 25px;
+}
+
+.nuevo-recurso-btn:hover {
+    background: #333;
+    transform: translateX(4px);
+    box-shadow: 0 4px 15px rgba(255,255,255,0.1);
+}
+
+.nuevo-recurso-btn.active {
+    background: #222;
+    border: 1px solid #777;
+    color: #fff;
+    box-shadow: 0 0 18px rgba(255,255,255,0.25);
+    transform: scale(1.04);
+}
+/* ------------------------------
+   BOTÓN "NUEVO RECURSO"
+--------------------------------*/
+.buscar-recurso {
+    background: #111;
+    color: #eaeaea;
+    border: 1px solid #333;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: 500;
+    width: 500px;
+    transition: all 0.25s ease;
+}
+
+.buscar-recurso::placeholder {
+    color: #6b6969;
+}
+
+/* Estilos de tabla Recursos*/
+.tabla-recursos table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #111;
+    color: #eaeaea;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.tabla-recursos th, .tabla-recursos td {
+    border: 1px solid #333;
+    padding: 10px;
+    text-align: left;
+}
+
+.tabla-recursos th {
+    background-color: #222;
+}
+
+.tabla-recursos tr:nth-child(even) {
+    background-color: #1a1a1a;
+}
+
+/* Estilos de tabla Bitacora */
+.tablas-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.tablas-container .tabla-accesos,
+.tablas-container .tabla-descargas {
+    flex: 1;
+    min-width: 300px;
+}
+
+
+/*Accesos*/
+.tabla-accesos table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #111;
+    color: #eaeaea;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.tabla-accesos th, .tabla-accesos td {
+    border: 1px solid #333;
+    padding: 10px;
+    text-align: left;
+}
+
+.tabla-accesos th {
+    background-color: #222;
+}
+
+.tabla-accesos tr:nth-child(even) {
+    background-color: #1a1a1a;
+}
+
+.tabla-accesos h2{
+    font-size: 20px;
+}
+/*Descargas*/
+/* Estilos de tabla Bitacora */
+.tabla-descargas table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #111;
+    color: #eaeaea;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.tabla-descargas th, .tabla-descargas td {
+    border: 1px solid #333;
+    padding: 10px;
+    text-align: left;
+}
+
+.tabla-descargas th {
+    background-color: #222;
+}
+
+.tabla-descargas tr:nth-child(even) {
+    background-color: #1a1a1a;
+}
+
+.tabla-descargas h2{
+    font-size: 20px;
+}

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="dashboard-body">
+    <div class="dashboard-container">
+        <!-- Sidebar izquierdo -->
+        <aside class="sidebar">
+            <h1>Gestor de recursos digitales</h1>
+            
+            <div class="user-info">
+                <p class="user-name">Juan Pérez</p>
+                <p class="user-email">juan@ejemplo.com</p>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-section="recursos">
+                    <span class="icon">
+                        <img src="icons/carpeta.png" alt="carpeta">
+                    </span>
+                    Recursos
+                </button>
+
+                <button class="nav-btn" data-section="bitacora">
+                    <span class="icon">
+                        <img src="icons/bitacora.png" alt="bitacora">
+                    </span>
+                    Bitácora
+                </button>
+
+                <button class="nav-btn" data-section="estadisticas">
+                    <span class="icon">
+                        <img src="icons/grafica.png" alt="estadisticas">
+                    </span>
+                    Estadísticas
+                </button>
+            </nav>
+
+            <button class="logout-btn">Cerrar Sesión</button>
+        </aside>
+        
+        <!-- Contenido principal -->
+        <main class="main-content">
+            <div class="content-section active" id="recursos">
+                <h2>Recursos Digitales</h2>
+                <button id="btnNuevoRecurso" class="nuevo-recurso-btn">Nuevo recurso</button>
+                <input type="text" id="BuscarRecurso" class="buscar-recurso" placeholder="Buscar recurso">
+                <!-- Sidebar o menú -->
+                <div id="formRecurso" class="form-container" style="display:none;">
+
+                    <h2>Registrar Recurso</h2>
+
+                    <form>
+
+                        <label>Nombre del recurso:</label>
+                        <input type="text" name="nombre">
+
+                        <label>Autor:</label>
+                        <input type="text" name="autor">
+
+                        <label>Departamento:</label>
+                        <input type="text" name="departamento">
+
+                        <label>Empresa / Institución:</label>
+                        <input type="text" name="empresa">
+
+                        <label>Fecha de creación:</label>
+                        <input type="date" name="fecha">
+
+                        <label>Descripción:</label>
+                        <textarea name="descripcion" rows="4"></textarea>
+
+                        <label>Archivo:</label>
+                        <input type="file" name="archivo" required>
+
+                        <button type="submit">Guardar Recurso</button>
+                    </form>
+                    
+                </div>
+                <!-- Tabla para mostrar recursos -->
+                <div class="tabla-recursos" id="recursos">
+                    <table id="tablaRecursos">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Autor</th>
+                                <th>Empresa</th>
+                                <th>Archivo</th>
+                                <th>Accion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Filas generadas dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="content-section" id="bitacora">
+                <h2>Bitácora</h2>
+                <div class="tablas-container">
+                    <div class="tabla-accesos">
+                        <h2>Accesos</h2>
+                        <table id="tablaAccesos">
+                            <thead>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Fecha</th>
+                                    <th>IP</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Filas generadas dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="tabla-descargas">
+                        <h2>Descargas</h2>
+                        <table id="tablaDescargas">
+                            <thead>
+                                <tr>
+                                    <th>Archivo</th>
+                                    <th>Fecha</th>
+                                    <th>IP</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Filas generadas dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>    
+                </div>
+            </div>
+            
+            <div class="content-section" id="estadisticas">
+                <h2>Estadísticas</h2>
+                <p>Aquí aparecerán tus estadísticas...</p>
+            </div>
+        </main>
+    </div>
+    
+    <script src="../backend/dashboard.js"></script>
+</body>
+</html>

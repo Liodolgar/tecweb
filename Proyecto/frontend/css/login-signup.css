@@ -1,0 +1,159 @@
+/* RESET GENERAL */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Flecha en la esquina superior derecha */
+.flecha {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.flecha button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.flecha img {
+    width: 30px;
+    height: 30px;
+    display: block;
+    filter: invert(1);
+}
+
+/* ------------------------------
+   ESTILO GENERAL
+--------------------------------*/
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #000000;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    color: #ffffff;
+}
+
+/* ------------------------------
+   CONTENEDOR PRINCIPAL
+--------------------------------*/
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+    border-radius: 14px;
+
+    /* Fondo premium */
+    background: linear-gradient(180deg, #141414, #0c0c0c);
+
+    /* Borde + glass suave */
+    border: 1px solid #1f1f1f;
+    box-shadow: 0 0 35px rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+}
+
+/* ------------------------------
+   TÍTULO
+--------------------------------*/
+h1 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 28px;
+    text-shadow: 0 0 6px rgba(255,255,255,0.15);
+}
+
+/* ------------------------------
+   LABELS
+--------------------------------*/
+label {
+    display: block;
+    margin-bottom: 6px;
+    color: #e6e6e6;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* ------------------------------
+   INPUTS
+--------------------------------*/
+input {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 14px;
+
+    background: #0f0f0f;
+    border: 1px solid #2c2c2c;
+    border-radius: 8px;
+    color: #ffffff;
+
+    transition: all 0.25s ease;
+    outline: none;
+}
+
+input:focus {
+    background: #151515;
+    border-color: #8f8f8f;
+    box-shadow: 0 0 8px rgba(200, 200, 200, 0.25);
+}
+
+/* ------------------------------
+   BOTÓN
+--------------------------------*/
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+
+    background: linear-gradient(135deg, #222, #000);
+    border: 1px solid #444;
+
+    color: #dcdcdc;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 10px;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: #e6e6e6;
+    color: #000;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.25);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* ------------------------------
+   TEXTO DE ENLACE
+--------------------------------*/
+.link-text {
+    text-align: center;
+    margin-top: 18px;
+    color: #a6a6a6;
+    font-size: 14px;
+}
+
+.link-text a {
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.link-text a:hover {
+    text-decoration: underline;
+    color: #dcdcdc;
+}
