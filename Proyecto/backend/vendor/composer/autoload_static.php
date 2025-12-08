@@ -12,6 +12,10 @@ class ComposerStaticInit63661d32234c94a7c47675fbaa16f77c
     );
 
     public static $prefixLengthsPsr4 = array (
+        'T' =>
+        array (
+            'TECWEB\\MYAPI\\' => 13,
+        ),
         'S' =>
         array (
             'Slim\\Psr7\\' => 10,
@@ -32,6 +36,10 @@ class ComposerStaticInit63661d32234c94a7c47675fbaa16f77c
     );
 
     public static $prefixDirsPsr4 = array (
+        'TECWEB\\MYAPI\\' =>
+        array (
+            0 => __DIR__ . '/../..' . '/myapi',
+        ),
         'Slim\\Psr7\\' =>
         array (
             0 => __DIR__ . '/..' . '/slim/psr7/src',

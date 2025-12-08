@@ -1,34 +1,167 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login - Gestor de Recursos</title>
     <link rel="stylesheet" href="css/login-signup.css">
 </head>
 <body>
-    <div class = "container">
-        <div class="flecha">
-            <a href="../index.html">
-                <img src="icons/flecha.png" alt="Regresar">
-            </a>
-        </div>
-        <h1>Login</h1>
-        <form>
-            <div>
-                <label for = "email">Email</label>
-                <input type = "email" id="email" name ="email">
-            </div>
-
-            <div>
-                <label for = "password">Password</label>
-                <input type = "password" id="password" name ="password">
-            </div>
-
-            <button type="submit"> Submit</button>
-            <p class="link-text">Don't you have an account? <a href="signup.html">Register here</a></p>
-    
-        </form>
+    <!-- Flecha para regresar -->
+    <div class="flecha">
+        <button onclick="window.location.href='../index.html'">
+            <img src="icons/flecha.png" alt="Regresar">
+        </button>
     </div>
+
+    <div class="container">
+        <h1>🔐 Iniciar Sesión</h1>
+        
+        <!-- Mensaje de error/éxito -->
+        <div id="mensaje" style="display:none; padding:12px; border-radius:8px; margin-bottom:15px;"></div>
+
+        <form id="loginForm">
+            <label for="username">Usuario</label>
+            <input 
+                type="text" 
+                id="username" 
+                name="username" 
+                placeholder="Ingresa tu usuario" 
+                required
+                autocomplete="username"
+            >
+
+            <label for="password">Contraseña</label>
+            <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                placeholder="Ingresa tu contraseña" 
+                required
+                autocomplete="current-password"
+            >
+
+            <button type="submit" id="btnLogin">Iniciar Sesión</button>
+        </form>
+
+        <p class="link-text">
+            ¿No tienes cuenta? <a href="signup.html">Regístrate aquí</a>
+        </p>
+
+        <div style="margin-top:20px; padding:15px; background:#1a1a1a; border-radius:8px; border:1px solid #333;">
+            <p style="color:#888; font-size:13px; text-align:center; margin:0;">
+                <strong style="color:#fff;">Usuario de prueba:</strong><br>
+                Usuario: <code style="color:#4CAF50;">admin</code> | 
+                Contraseña: <code style="color:#4CAF50;">admin123</code>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // ====================================
+        // CONFIGURACIÓN - SLIM FRAMEWORK
+        // ====================================
+        const API_URL = 'http://localhost/tecweb/Proyecto/backend/public';
+
+        const loginForm = document.getElementById('loginForm');
+        const btnLogin = document.getElementById('btnLogin');
+        const mensaje = document.getElementById('mensaje');
+
+        // ====================================
+        // FUNCIÓN PARA MOSTRAR MENSAJES
+        // ====================================
+        function mostrarMensaje(texto, tipo = 'error') {
+            if (tipo === 'error') {
+                mensaje.style.background = '#fee';
+                mensaje.style.color = '#c33';
+                mensaje.style.borderLeft = '4px solid #c33';
+            } else {
+                mensaje.style.background = '#efe';
+                mensaje.style.color = '#3c3';
+                mensaje.style.borderLeft = '4px solid #3c3';
+            }
+            
+            mensaje.textContent = texto;
+            mensaje.style.display = 'block';
+            
+            setTimeout(() => {
+                mensaje.style.display = 'none';
+            }, 5000);
+        }
+
+        // ====================================
+        // MANEJAR SUBMIT DEL FORMULARIO
+        // ====================================
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            if (!username || !password) {
+                mostrarMensaje('Por favor completa todos los campos');
+                return;
+            }
+
+            // Deshabilitar botón
+            btnLogin.disabled = true;
+            btnLogin.textContent = 'Iniciando sesión...';
+
+            try {
+                const response = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                });
+
+                const data = await response.json();
+                
+                console.log('Respuesta del servidor:', data);
+
+                // Verificar diferentes formatos de respuesta
+                if (data.status === 'success' || data.success === true) {
+                    // Guardar datos en localStorage
+                    localStorage.setItem('user', JSON.stringify(data));
+                    
+                    mostrarMensaje('¡Login exitoso! Redirigiendo...', 'success');
+                    
+                    // Redirigir después de 1 segundo
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1000);
+                } else {
+                    mostrarMensaje(data.message || 'Usuario o contraseña incorrectos');
+                }
+            } catch (error) {
+                console.error('Error completo:', error);
+                mostrarMensaje('Error de conexión. Verifica que XAMPP esté activo.');
+            } finally {
+                btnLogin.disabled = false;
+                btnLogin.textContent = 'Iniciar Sesión';
+            }
+        });
+
+        // ====================================
+        // VERIFICAR SI YA HAY SESIÓN ACTIVA
+        // ====================================
+        window.addEventListener('load', () => {
+            const user = localStorage.getItem('user');
+            if (user) {
+                try {
+                    const userData = JSON.parse(user);
+                    if (userData.status === 'success' || userData.success === true) {
+                        window.location.href = 'dashboard.html';
+                    }
+                } catch (e) {
+                    localStorage.removeItem('user');
+                }
+            }
+        });
+    </script>
 </body>
 </html>

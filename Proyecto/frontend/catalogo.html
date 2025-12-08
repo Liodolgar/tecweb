@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,10 +9,11 @@
 <body>
     <div class="container">
         <div class="regresar">
-            <a href="../index.html"> Regresar
-            </a>
+            <a href="../index.html">← Regresar</a>
         </div>
-        <h1>Catálogo de Recursos</h1>
+        
+        <h1>📚 Catálogo de Recursos Digitales</h1>
+        <p style="text-align:center; color:#888; margin-bottom:20px;">Recursos disponibles para descarga</p>
 
         <!-- Sección de búsqueda -->
         <div class="buscar-recurso">
@@ -28,29 +29,138 @@
                     <th>Departamento</th>
                     <th>Empresa</th>
                     <th>Descripción</th>
-                    <th>Fecha de ingreso</th>
+                    <th>Fecha</th>
                     <th>Tipo</th>
-                    <th>Accion</th>
+                    <th>Descargar</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Aquí se llenarán los datos del dashboard -->
                 <tr>
-                    <td>Recurso 1</td>
-                    <td>Categoria A</td>
-                    <td>Descripción del recurso 1</td>
-                    <td>2025-12-03</td>
+                    <td colspan="8" style="text-align:center;">Cargando recursos...</td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Recurso 2</td>
-                    <td>Categoria B</td>
-                    <td>Descripción del recurso 2</td>
-                    <td>2025-12-02</td>
-                </tr>
-                <!-- Más filas según los datos del dashboard -->
             </tbody>
         </table>
     </div>
+
+    <script>
+        // Configuración API
+        const API_URL = 'http://localhost/tecweb/Proyecto/backend/public/index.php';
+        let recursos = [];
+
+        // Cargar recursos al iniciar
+        window.addEventListener('load', cargarRecursos);
+
+        // Función para cargar recursos
+        async function cargarRecursos() {
+            try {
+                const response = await fetch(`${API_URL}?action=list_resources`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    recursos = data.data;
+                    mostrarRecursos(recursos);
+                } else {
+                    mostrarError('No se pudieron cargar los recursos');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                mostrarError('Error de conexión con el servidor');
+            }
+        }
+
+        // Función para mostrar recursos
+        function mostrarRecursos(recursos) {
+            const tbody = document.querySelector('#tabla-recursos tbody');
+            tbody.innerHTML = '';
+            
+            if (recursos.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">No hay recursos disponibles</td></tr>';
+                return;
+            }
+            
+            recursos.forEach(recurso => {
+                const tr = document.createElement('tr');
+                
+                // Obtener extensión
+                const extension = recurso.archivo.split('.').pop().toLowerCase();
+                const icono = getIconoPorExtension(extension);
+                
+                tr.innerHTML = `
+                    <td><strong>${recurso.nombre}</strong></td>
+                    <td>${recurso.autor || 'N/A'}</td>
+                    <td>${recurso.departamento || 'N/A'}</td>
+                    <td>${recurso.empresa_institucion || 'N/A'}</td>
+                    <td>${recurso.descripcion ? recurso.descripcion.substring(0, 50) + '...' : 'Sin descripción'}</td>
+                    <td>${recurso.fecha_creacion || 'N/A'}</td>
+                    <td style="font-size:24px; text-align:center;">${icono}</td>
+                    <td style="text-align:center;">
+                        <button onclick="descargarRecurso(${recurso.id})" class="btn-descargar">
+                            ⬇️ Descargar
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Función para obtener icono por extensión
+        function getIconoPorExtension(ext) {
+            const iconos = {
+                'pdf': '📄', 'doc': '📝', 'docx': '📝',
+                'xls': '📊', 'xlsx': '📊',
+                'ppt': '📽️', 'pptx': '📽️',
+                'zip': '🗜️', 'rar': '🗜️', '7z': '🗜️',
+                'txt': '📃', 'json': '📋', 'xml': '📋',
+                'csv': '📊', 'sql': '🗃️',
+                'exe': '⚙️', 'jar': '☕',
+                'jpg': '🖼️', 'jpeg': '🖼️', 'png': '🖼️', 'gif': '🖼️',
+                'mp3': '🎵', 'mp4': '🎬', 'avi': '🎬', 'mkv': '🎬'
+            };
+            return iconos[ext] || '📦';
+        }
+
+        // Función para descargar recurso
+        function descargarRecurso(id) {
+            window.open(`${API_URL}?action=download&id=${id}`, '_blank');
+        }
+
+        // Función para mostrar error
+        function mostrarError(mensaje) {
+            const tbody = document.querySelector('#tabla-recursos tbody');
+            tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:#f55;">${mensaje}</td></tr>`;
+        }
+
+        // Búsqueda en tiempo real
+        document.getElementById('buscarInput').addEventListener('input', (e) => {
+            const busqueda = e.target.value.toLowerCase();
+            const recursosFiltrados = recursos.filter(r => 
+                r.nombre.toLowerCase().includes(busqueda) ||
+                (r.autor && r.autor.toLowerCase().includes(busqueda)) ||
+                (r.departamento && r.departamento.toLowerCase().includes(busqueda)) ||
+                (r.empresa_institucion && r.empresa_institucion.toLowerCase().includes(busqueda))
+            );
+            mostrarRecursos(recursosFiltrados);
+        });
+    </script>
+
+    <style>
+        .btn-descargar {
+            background: #222;
+            color: #eaeaea;
+            border: 1px solid #444;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .btn-descargar:hover {
+            background: #444;
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255,255,255,0.2);
+        }
+    </style>
 </body>
 </html>

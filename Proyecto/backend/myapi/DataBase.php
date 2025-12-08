@@ -5,7 +5,7 @@ abstract class DataBase {
     protected $conexion;
     protected array $data = [];
 
-    public function __construct($db, $user, $pass) {
+    public function __construct($db, $user = 'root', $pass = '') {
         $this->conexion = @mysqli_connect(
             'localhost',
             $user,
@@ -17,14 +17,14 @@ abstract class DataBase {
          * NOTA: si la conexión falló $conexion contendrá false
          **/
         if(!$this->conexion) {
-            die('¡Base de datos NO conextada!');
+            die('¡Base de datos NO conectada!');
         }
-        /*else {
-            echo 'Base de datos encontrada';
-        }*/
+        
+        // Establecer charset UTF-8
+        $this->conexion->set_charset("utf8mb4");
     }
-    public function getData()
-    {
+    
+    public function getData() {
         // SE HACE LA CONVERSIÓN DE ARRAY A JSON
         return json_encode($this->data, JSON_PRETTY_PRINT);
     }

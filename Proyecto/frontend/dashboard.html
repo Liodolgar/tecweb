@@ -3,8 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Dashboard - Administrador</title>
     <link rel="stylesheet" href="css/dashboard.css">
+    <!-- Chart.js para gráficas -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        /* Estilos para sección de estadísticas */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .chart-box {
+            background: #111;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            box-shadow: 0 0 20px rgba(255,255,255,0.05);
+        }
+        
+        @media (max-width: 768px) {
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body class="dashboard-body">
     <div class="dashboard-container">
@@ -13,8 +38,8 @@
             <h1>Gestor de recursos digitales</h1>
             
             <div class="user-info">
-                <p class="user-name">Juan Pérez</p>
-                <p class="user-email">juan@ejemplo.com</p>
+                <p class="user-name">Cargando...</p>
+                <p class="user-email">Administrador</p>
             </div>
             
             <nav class="sidebar-nav">
@@ -45,19 +70,18 @@
         
         <!-- Contenido principal -->
         <main class="main-content">
+            <!-- SECCIÓN RECURSOS -->
             <div class="content-section active" id="recursos">
                 <h2>Recursos Digitales</h2>
                 <button id="btnNuevoRecurso" class="nuevo-recurso-btn">Nuevo recurso</button>
                 <input type="text" id="BuscarRecurso" class="buscar-recurso" placeholder="Buscar recurso">
-                <!-- Sidebar o menú -->
+                
+                <!-- Formulario de registro -->
                 <div id="formRecurso" class="form-container" style="display:none;">
-
                     <h2>Registrar Recurso</h2>
-
                     <form>
-
                         <label>Nombre del recurso:</label>
-                        <input type="text" name="nombre">
+                        <input type="text" name="nombre" required>
 
                         <label>Autor:</label>
                         <input type="text" name="autor">
@@ -79,10 +103,10 @@
 
                         <button type="submit">Guardar Recurso</button>
                     </form>
-                    
                 </div>
-                <!-- Tabla para mostrar recursos -->
-                <div class="tabla-recursos" id="recursos">
+                
+                <!-- Tabla de recursos -->
+                <div class="tabla-recursos">
                     <table id="tablaRecursos">
                         <thead>
                             <tr>
@@ -95,12 +119,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Filas generadas dinámicamente -->
+                            <tr>
+                                <td colspan="6" style="text-align:center;">Cargando recursos...</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             
+            <!-- SECCIÓN BITÁCORA -->
             <div class="content-section" id="bitacora">
                 <h2>Bitácora</h2>
                 <div class="tablas-container">
@@ -115,7 +142,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Filas generadas dinámicamente -->
+                                <tr>
+                                    <td colspan="3" style="text-align:center;">Sin datos</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -131,20 +160,34 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Filas generadas dinámicamente -->
+                                <tr>
+                                    <td colspan="3" style="text-align:center;">Sin datos</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>    
                 </div>
             </div>
             
+            <!-- SECCIÓN ESTADÍSTICAS -->
             <div class="content-section" id="estadisticas">
-                <h2>Estadísticas</h2>
-                <p>Aquí aparecerán tus estadísticas...</p>
+                <h2>📊 Estadísticas</h2>
+                
+                <div class="stats-container">
+                    <!-- Gráfica de tipos de archivo -->
+                    <div class="chart-box">
+                        <canvas id="chartTipos"></canvas>
+                    </div>
+                    
+                    <!-- Gráfica de recursos recientes -->
+                    <div class="chart-box">
+                        <canvas id="chartRecursos"></canvas>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
     
-    <script src="../backend/dashboard.js"></script>
+    <script src="../backend/js/dashboard.js"></script>
 </body>
 </html>

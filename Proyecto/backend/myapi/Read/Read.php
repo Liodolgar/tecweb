@@ -8,7 +8,7 @@ require_once __DIR__ . '/../DataBase.php';
 
 class Read extends DataBase
 {
-    public function __construct($db, $user = 'root', $pass = 'joseeeab')
+    public function __construct($db, $user = 'root', $pass = '')
     {
         parent::__construct($db, $user, $pass);
     }
@@ -103,9 +103,19 @@ class Read extends DataBase
 
                 $user = $result->fetch_assoc();
 
-                // Verificar contraseña
+                // Verificar contraseña (hash O texto plano)
+                $passwordValida = false;
+                
+                // Primero intentar con password_verify (hash)
                 if (password_verify($password, $user['password'])) {
+                    $passwordValida = true;
+                } 
+                // Si falla, comparar en texto plano
+                elseif ($password === $user['password']) {
+                    $passwordValida = true;
+                }
 
+                if ($passwordValida) {
                     $this->data = [
                         'status' => 'success',
                         'message' => 'Login exitoso',
